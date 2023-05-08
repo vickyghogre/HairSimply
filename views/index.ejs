@@ -1,0 +1,9 @@
+<%- include('./partials/header.ejs') %>
+
+    <h1>this is all the jobs</h1>
+    <a href="/jobs/new" class="btn btn-primary">Add a new job</a>
+    <% for(let job of foundJob){ %>
+        <div><%= job.name %> <a class="btn btn-info" href="/jobs/<%=job._id%>">Read more</a></div>
+    <% } %>
+
+<%- include('./partials/footer.ejs') %>
