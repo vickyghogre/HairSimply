@@ -1,9 +1,20 @@
 <%- include('./partials/header.ejs') %>
-
+<form action="/jobs" method="get">
+    <input type="text" name="search">
+    <input type="submit" value="search">
+</form>
     <h1>this is all the jobs</h1>
     <a href="/jobs/new" class="btn btn-primary">Add a new job</a>
-    <% for(let job of foundJob){ %>
-        <div><%= job.name %> <a class="btn btn-info" href="/jobs/<%=job._id%>">Read more</a></div>
+    <% for(let job of foundJobs){ %>
+       <!-- // <div</div> -->
+        <div class="card" style="width: 18rem;">
+            <img src="<%=job.image %>" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"><%= job.name %> </h5>
+              <p class="card-text"> <%= job.description %> </p>
+              <a class="btn btn-info" href="/jobs/<%=job._id%>">Read more</a>
+            </div>
+          </div>
     <% } %>
 
 <%- include('./partials/footer.ejs') %>

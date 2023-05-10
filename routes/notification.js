@@ -1,43 +1,40 @@
-let express=require('express');
-let router=express.Router();
+let express = require('express');
+let router = express.Router();
 let Notification = require('../models/notif-DB');
-//index
-router.get('/notification',async (req, res) => {
-    try {
-        let allNotifs = await Notification.find({});
-        res.render('notification/index-Notif.ejs',{allNotifs});
-    } catch (error) {
-        console.log('Error while fetchin notification',error);
-    }
-
+let { isLoggedIn, isAdmin } = require('../middlewares/index');
+// index
+router.get('/notifications', async function(req, res) {
+	try {
+		let allNotifs = await Notification.find({});
+		res.render('index-notif.ejs', { allNotifs });
+	} catch (error) {
+		console.log('error while fetching notifs', error);
+	}
 });
-//new notification
-router.get('/notification/new',async (req, res) => {
-     res.render('notification/new')
+// new
+router.get('/notifications/new', function(req, res) {
+	res.render('new-notif');
 });
-//create notification
-router.post('/notification',async (req, res) =>{
-try {
-    let notif= new Notification({
-        body:req.body.body,
-        author:req.body.author
-    })
-    await notif.save();
-    res.redirect('/notification')
-} catch (error) {
-    console.log('error while creating a notification',error);
-}
+// create
+router.post('/notifications', async function(req, res) {
+	try {
+		let notif = new Notification({
+			body: req.body.body,
+			author: req.body.author
+		});
+		await notif.save();
+		res.redirect('/notifications');
+	} catch (error) {
+		console.log('error while creating notif', error);
+	}
 });
-//delete notification
-router.delete('/notification/:id', async (req, res)=>{
-  try {
-    Notification.findByIdAndDelete(req.params.id);
-    res.redirect('/notification');
-  } catch (error) {
-    console.log('error while deleting notification',error);
-  }
+// delete
+router.delete('/notifications/:id', isLoggedIn, isAdmin, async function(req, res) {
+	try {
+		await Notification.findByIdAndDelete(req.params.id);
+		res.redirect('/notifications');
+	} catch (error) {
+		console.log('error while deleting notif', error);
+	}
 });
-
-
-
 module.exports = router;

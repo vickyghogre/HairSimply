@@ -6,7 +6,7 @@ let jobSchema = new mongoose.Schema({
     address: String,
     image: String,
     package: String,
-    // description: String,
+    description: String,
     cgpa:Number,
     deadline:{
         type:Date,

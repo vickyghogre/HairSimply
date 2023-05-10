@@ -6,5 +6,5 @@ let notifSchema = new mongoose.Schema({
 
 });
 
-let Notification = mongoose.model('nitification',notifSchema);
+let Notification = mongoose.model('notification',notifSchema);
 module.exports = Notification;
