@@ -1,10 +1,9 @@
-let mongoose= require('mongoose');
+let mongoose = require('mongoose');
 
 let notifSchema = new mongoose.Schema({
-    body:String,    
-    author:String
-
+	body: String,
+	author: String
 });
 
-let Notification = mongoose.model('notification',notifSchema);
+let Notification = mongoose.model('notification', notifSchema);
 module.exports = Notification;

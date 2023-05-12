@@ -1,4 +1,4 @@
-<%- include('../partials/header.ejs') %>
+<%- include('./partials/header.ejs') %>
 <a href="/jobs/<%= jobId %>/questions/new" class="btn btn-danger">add a new question</a>
 <h1>list of all questions</h1>
 <% for( let ques of questions ) { %>
@@ -14,4 +14,4 @@
     </form>
 </div>
 <% } %>
-<%- include('../partials/footer.ejs') %>
+<%- include('./partials/footer.ejs') %>

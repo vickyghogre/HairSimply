@@ -1,20 +1,25 @@
 <%- include('./partials/header.ejs') %>
+
+<link rel="stylesheet" href="/style.css">
 <form action="/jobs" method="get">
     <input type="text" name="search">
     <input type="submit" value="search">
 </form>
-    <h1>this is all the jobs</h1>
-    <a href="/jobs/new" class="btn btn-primary">Add a new job</a>
+<h1>List of all jobs</h1>
+<a class="btn btn-danger" href="/jobs/new">Add a new job</a>
+<div class="row">
     <% for(let job of foundJobs){ %>
-       <!-- // <div</div> -->
-        <div class="card" style="width: 18rem;">
-            <img src="<%=job.image %>" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title"><%= job.name %> </h5>
-              <p class="card-text"> <%= job.description %> </p>
-              <a class="btn btn-info" href="/jobs/<%=job._id%>">Read more</a>
-            </div>
-          </div>
+    <div class="card ">
+        <img src="<%= job.image %>" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"><%= job.name %></h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="/jobs/<%= job._id %>" class="btn btn-primary">Read More</a>
+        </div>
+      </div>
     <% } %>
+</div>
 
 <%- include('./partials/footer.ejs') %>
+
+<!-- style="width: 18rem; padding: 10px;" -->

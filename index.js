@@ -1,3 +1,4 @@
+// ! REQUIRING MODULES
 let express = require('express'),
 	mongoose = require('mongoose'),
 	methodOverride = require('method-override'),
@@ -8,37 +9,54 @@ let express = require('express'),
 	moment = require('moment'),
 	flash = require('connect-flash');
 let app = express();
+//require('dotenv').config();
 
+// !DATABASE SETUP
+//let databaseUsername = process.env.DB_USERNAME;
+//let databasePassword = process.env.DB_PASS;
 mongoose
-    .connect('mongodb+srv://vicky:vicky@hirehub.vfuozdt.mongodb.net/?retryWrites=true&w=majority')
-    .then(function(){
-        console.log('DB Connected');
-    })
-    .catch(function(error){
-        console.log(error);
-    });
+	.connect(
+		'mongodb+srv://vicky:vicky@hirehub.vfuozdt.mongodb.net/?retryWrites=true&w=majority'
+)	
+.then(function() {
+		console.log('db working');
+	})
+	.catch(function(err) {
+		console.log(err);
+	});
 
+// ! SESSION SETUP
+//let sessionPass = process.env.SESSION_PASS;
+app.use(
+	session({
+		secret: 'SuperSecretPasswordForHireHub',
+		resave: false,
+		saveUninitialized: true,
+		cookie: {
+			httpOnly: true,
+			// secure: true,
+			expires: Date.now() + 1000 * 60 * 60 * 24,
+			maxAge: 1000 * 60 * 60 * 24
+		}
+	})
+);
 
-    app.use(
-        session({
-            secret: 'SuperSecretPasswordForHireHub',
-            resave: false,
-            saveUninitialized: true,
-            cookie: {
-                httpOnly: true,
-                // secure: true,
-                expires: Date.now() + 1000 * 60 * 60 * 24,
-                maxAge: 1000 * 60 * 60 * 24
-            }
-        })
-    );
+// ! DATABASE MODELS
+let User = require('./models/user-DB');
 
-    // ! SERVER SETUP AND MIDDLEWARES
-app.set('view engine','ejs'); //ejs extension
-app.use(express.urlencoded({ extended : true })); //body parsing
-app.use(methodOverride('_method')); //patch delete request
-app.use(express.static(__dirname + '/public')); //static resource
-app.use(flash()); // alerts
+// ! PASSPORT CONFIGURATION
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+// ! SERVER SETUP AND MIDDLEWARES
+app.use(express.static(path.join(__dirname, 'public'))); // static resources
+app.set('view engine', 'ejs'); // ejs extension
+app.use(express.urlencoded({ extended: true })); // body parsing
+app.use(methodOverride('_method')); // patch/delete requests
+app.use(flash());// alert
 app.use(function(req, res, next) {
 	res.locals.currentUser = req.user;
 	res.locals.moment = moment;
@@ -47,19 +65,92 @@ app.use(function(req, res, next) {
 	next();
 });
 
-
-let jobRoutes= require('./routes/jobs.js');
-let notifRoutes= require('./routes/notification.js');
-let authRoutes = require('./routes/auth.js')
-let userRoutes = require('./routes/user.js')
-let questionRoutes = require('./routes/questions')
-
+// ! ROUTING LOGIC
+let jobRoutes = require('./routes/jobs.js');
+let notifRoutes = require('./routes/notifications');
+let authRoutes = require('./routes/auth');
+let userRoutes = require('./routes/user');
+let questionRoutes = require('./routes/questions');
 app.use(jobRoutes);
 app.use(notifRoutes);
 app.use(authRoutes);
 app.use(userRoutes);
 app.use(questionRoutes);
 
-app.listen(3000,function(req,res){
-    console.log('Server is Running');
+// ! PORT SETUP
+//let port = process.env.PORT;
+app.listen(3000, function() {
+	console.log('server started on port 3000');
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//secret: 'SuperSecretPasswordForHireHub'
+// mongoose
+//     .connect('mongodb+srv://vicky:vicky@hirehub.vfuozdt.mongodb.net/?retryWrites=true&w=majority')
+//     .then(function(){
+//         console.log('DB Connected');
+//     })
+//     .catch(function(error){
+//         console.log(error);
+//     });
+

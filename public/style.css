@@ -1,3 +1,15 @@
+img {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
 body{
-    background-color: rgb(233, 13, 13);
+    background-color: aliceblue;
+}
+.card{
+    padding: 10px;
+    width: 18rem;
 }

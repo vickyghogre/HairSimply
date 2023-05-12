@@ -1,10 +1,10 @@
-<%- include('../partials/header.ejs') %>
+<%- include('./partials/header.ejs') %>
 
 
 <div class="row">
     <div class="col-6 m-auto">
-        <h1>register form</h1>
-        <form action="/register" method="post">
+        <h1>login form</h1>
+        <form action="/login" method="post">
             <div class="mb-3">
                 <label for="email" class="form-label">email</label>
                 <input type="text" class="form-control" id="email" name="username">
@@ -14,10 +14,10 @@
                 <input type="text" class="form-control" id="password" name="password">
             </div>
             <div>
-                <input class="btn btn-primary" type="submit" value="register">
+                <input class="btn btn-primary" type="submit" value="login">
             </div>
         </form>
     </div>
 </div>
 
-<%- include('../partials/footer.ejs') %>
+<%- include('./partials/footer.ejs') %>
